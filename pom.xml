@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+   <modelVersion>4.0.0</modelVersion>
+
+   <groupId>club.javafamily.archetype</groupId>
+   <artifactId>springboot-archetype</artifactId>
+   <version>${project.release.version}</version>
+   <packaging>pom</packaging>
+
+   <properties>
+      <java.version>1.8</java.version>
+      <project.release.version>1.0-SNAPSHOT</project.release.version>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      <jdk.version>${java.version}</jdk.version>
+      <maven.compiler.source>${jdk.version}</maven.compiler.source>
+      <maven.compiler.target>${jdk.version}</maven.compiler.target>
+      <spring.boot.version>2.3.2.RELEASE</spring.boot.version>
+      <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+      <spring-cloud-alibaba.version>2.2.5.RELEASE</spring-cloud-alibaba.version>
+      <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
+      <maven.compile.plugin.version>3.6.0</maven.compile.plugin.version>
+      <docker-build.plugin.version>1.4.13</docker-build.plugin.version>
+      <jackson.version>2.11.4</jackson.version>
+      <httpclient.version>4.3.3</httpclient.version>
+      <net.ftp.version>3.6</net.ftp.version>
+      <fastJson.version>1.2.56</fastJson.version>
+      <gson.version>2.8.0</gson.version>
+      <commons.codec.version>1.6</commons.codec.version>
+      <commons.logging.version>1.1.3</commons.logging.version>
+      <protobuf.version>3.0.0-beta-4</protobuf.version>
+      <swagger.version>2.9.2</swagger.version>
+      <lombok.version>1.18.0</lombok.version>
+      <poi.version>4.1.2</poi.version>
+      <commons.bean.utils.version>1.9.4</commons.bean.utils.version>
+      <netcdf.version>5.1.0</netcdf.version>
+      <oss.minio.version>8.2.2</oss.minio.version>
+      <commons.compress.version>1.18</commons.compress.version>
+      <joda-time.version>2.10.10</joda-time.version>
+      <junit5.version>5.6.2</junit5.version>
+      <mybatis-plus.version>3.4.1</mybatis-plus.version>
+      <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
+      <mybatis-plus-template.version>2.3</mybatis-plus-template.version>
+      <mybatis.spring.version>2.0.5</mybatis.spring.version>
+      <mybatis-plus-annotation.version>3.4.1</mybatis-plus-annotation.version>
+      <apach.math.version>6.5.0.Final</apach.math.version>
+      <hutool.version>5.4.1</hutool.version>
+      <metrics-prometheus.version>1.5.1</metrics-prometheus.version>
+      <xxl-job.version>2.3.0</xxl-job.version>
+   </properties>
+
+   <profiles>
+      <profile>
+         <id>prod</id>
+         <properties>
+            <project.release.version>1.0</project.release.version>
+         </properties>
+      </profile>
+   </profiles>
+
+   <distributionManagement>
+      <repository>
+         <id>release</id>
+         <name>nexus Repository RELEASES</name>
+         <url>http://javafamily.club:8081/repository/maven-releases/</url>
+      </repository>
+      <snapshotRepository>
+         <id>allow-snapshots</id>
+         <name>nexus Repository SNAPSHOTS</name>
+         <url>http://javafamily.club:8081/repository/maven-snapshots/</url>
+      </snapshotRepository>
+   </distributionManagement>
+
+   <dependencyManagement>
+      <dependencies>
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>${spring.boot.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+
+         <!-- spring cloud 依赖 -->
+         <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+         <!-- spring cloud alibaba 依赖 -->
+         <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+            <version>${spring-cloud-alibaba.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+         </dependency>
+
+         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+         </dependency>
+         <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>${joda-time.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastJson.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>${commons.compress.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>${net.ftp.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>${poi.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${oss.minio.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>edu.ucar</groupId>
+            <artifactId>netcdfAll</artifactId>
+            <version>${netcdf.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${metrics-prometheus.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>${xxl-job.version}</version>
+         </dependency>
+
+      </dependencies>
+   </dependencyManagement>
+
+   <build>
+      <pluginManagement>
+         <plugins>
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-archetype-plugin</artifactId>
+               <version>3.2.0</version>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-compiler-plugin</artifactId>
+               <version>${maven.compile.plugin.version}</version>
+               <configuration>
+                  <source>${jdk.version}</source>
+                  <target>${jdk.version}</target>
+                  <!--                  <encoding>${project.build.sourceEncoding}}</encoding>-->
+               </configuration>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-resources-plugin</artifactId>
+               <configuration>
+                  <encoding>${project.build.sourceEncoding}</encoding>
+               </configuration>
+            </plugin>
+
+            <plugin>
+               <groupId>org.springframework.boot</groupId>
+               <artifactId>spring-boot-maven-plugin</artifactId>
+               <version>${spring.boot.version}</version>
+               <configuration>
+                  <skip>true</skip>
+               </configuration>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-source-plugin</artifactId>
+               <version>3.2.1</version>
+               <configuration>
+                  <attach>true</attach>
+               </configuration>
+               <executions>
+                  <execution>
+                     <phase>compile</phase>
+                     <goals>
+                        <goal>jar</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>com.spotify</groupId>
+               <artifactId>dockerfile-maven-plugin</artifactId>
+               <version>${docker-build.plugin.version}</version>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-checkstyle-plugin</artifactId>
+               <version>3.1.1</version>
+               <configuration>
+                  <configLocation>codeStyle/google_checks.xml</configLocation>
+                  <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                  <encoding>${project.build.sourceEncoding}</encoding>
+                  <consoleOutput>true</consoleOutput>
+                  <failsOnError>true</failsOnError>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>validate</id>
+                     <phase>validate</phase>
+                     <goals>
+                        <goal>check</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>org.codehaus.mojo</groupId>
+               <artifactId>findbugs-maven-plugin</artifactId>
+               <version>3.0.5</version>
+               <configuration>
+                  <!-- 设置分析工作的等级，可以为Min、Default 和 Max -->
+                  <effort>Default</effort>
+                  <!-- Low、Medium 和 High (Low最严格) -->
+                  <threshold>Medium</threshold>
+                  <failOnError>true</failOnError>
+                  <includeTests>true</includeTests>
+                  <excludeFilterFile>codeStyle/findbugs-exclude-bugs.xml</excludeFilterFile>
+               </configuration>
+               <executions>
+                  <execution>
+                     <id>run-findbugs</id>
+                     <phase>package</phase>
+                     <goals>
+                        <!--检查不通过会构建失败，使用findbugs，失败也会构建-->
+                        <goal>check</goal>
+                     </goals>
+                  </execution>
+               </executions>
+            </plugin>
+
+            <plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-antrun-plugin</artifactId>
+               <version>1.8</version>
+               <executions>
+                  <execution>
+                     <phase>validate</phase>
+                     <goals>
+                        <goal>run</goal>
+                     </goals>
+                     <configuration>
+                        <tasks>
+                           <echo>Copy mvnw file</echo>
+                           <copy file="mvnw" tofile="${basedir}/target/generated-sources/archetype/mvnw"/>
+                           <copy todir="${basedir}/target/generated-sources/archetype/.mvn">
+                              <fileset dir=".mvn">
+                                 <include name="**/*"/>
+                              </fileset>
+                           </copy>
+                        </tasks>
+                     </configuration>
+                  </execution>
+               </executions>
+            </plugin>
+         </plugins>
+      </pluginManagement>
+
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <configuration>
+               <configLocation>codeStyle/google_checks.xml</configLocation>
+               <includeTestSourceDirectory>true</includeTestSourceDirectory>
+               <encoding>${project.build.sourceEncoding}</encoding>
+               <consoleOutput>true</consoleOutput>
+               <failsOnError>true</failsOnError>
+            </configuration>
+            <executions>
+               <execution>
+                  <id>validate</id>
+                  <phase>validate</phase>
+                  <goals>
+                     <goal>check</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+         </plugin>
+
+         <!-- 要将源码放上去，需要加入这个插件 -->
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <configuration>
+               <attach>true</attach>
+            </configuration>
+            <executions>
+               <execution>
+                  <phase>compile</phase>
+                  <goals>
+                     <goal>jar</goal>
+                  </goals>
+               </execution>
+            </executions>
+         </plugin>
+
+         <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>findbugs-maven-plugin</artifactId>
+         </plugin>
+      </plugins>
+   </build>
+
+   <reporting>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            <reportSets>
+               <reportSet>
+                  <reports>
+                     <report>checkstyle</report>
+                  </reports>
+               </reportSet>
+            </reportSets>
+         </plugin>
+      </plugins>
+   </reporting>
+</project>
