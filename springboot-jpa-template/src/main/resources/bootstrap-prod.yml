@@ -1,0 +1,8 @@
+spring:
+   cloud:
+      nacos:
+         config:
+            server-addr: 10.172.17.193:9020
+            file-extension: yaml
+            namespace: sxyjzx
+            group: sxyjzx
