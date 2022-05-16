@@ -64,11 +64,6 @@
          <name>The Apache Software License, Version 2.0</name>
          <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
       </license>
-      <!-- MIT许可证 -->
-      <!--	<license>
-              <name>MIT License</name>
-              <url>http://www.opensource.org/licenses/mit-license.php</url>
-          </license>-->
    </licenses>
    <!-- SCM信息 -> git在github上托管 -->
    <scm>
@@ -126,7 +121,7 @@
                <plugin>
                   <groupId>org.apache.maven.plugins</groupId>
                   <artifactId>maven-gpg-plugin</artifactId>
-                  <version>1.5</version>
+                  <version>3.0.1</version>
                   <executions>
                      <execution>
                         <id>sign-artifacts</id>
@@ -136,6 +131,11 @@
                         </goals>
                      </execution>
                   </executions>
+                  <configuration>
+                     <homedir>${basedir}</homedir>
+                     <publicKeyring>javafamily-secret.gpg</publicKeyring>
+                     <passphrase>dreamLi0812!@#</passphrase>
+                  </configuration>
                </plugin>
             </plugins>
          </build>
