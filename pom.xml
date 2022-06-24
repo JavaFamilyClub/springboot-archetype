@@ -4,20 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
    <modelVersion>4.0.0</modelVersion>
 
-   <groupId>club.javafamily.archetype</groupId>
+   <groupId>club.javafamily</groupId>
    <artifactId>springboot-archetype</artifactId>
    <version>1.0-SNAPSHOT</version>
    <packaging>pom</packaging>
+   <name>springboot-archetype</name>
+   <description>springboot-archetype</description>
+   <url>https://github.com/JavaFamilyClub/springboot-archetype</url>
+
+   <modules>
+<!--      <module>springboot-jpa-template</module>-->
+   </modules>
 
    <modules>
       <module>spring-boot-jpa</module>
    </modules>
 
    <properties>
-      <java.version>1.8</java.version>
-      <project.release.version>1.0-SNAPSHOT</project.release.version>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-      <jdk.version>${java.version}</jdk.version>
+      <jdk.version>1.8</jdk.version>
       <maven.compiler.source>${jdk.version}</maven.compiler.source>
       <maven.compiler.target>${jdk.version}</maven.compiler.target>
       <spring.boot.version>2.3.2.RELEASE</spring.boot.version>
@@ -47,33 +52,132 @@
       <mybatis-plus-generator.version>3.4.1</mybatis-plus-generator.version>
       <mybatis-plus-template.version>2.3</mybatis-plus-template.version>
       <mybatis.spring.version>2.0.5</mybatis.spring.version>
+      <java-jwt.version>3.4.0</java-jwt.version>
       <mybatis-plus-annotation.version>3.4.1</mybatis-plus-annotation.version>
+      <druid-spring-boot-starter.version>1.2.8</druid-spring-boot-starter.version>
+      <okhttp.version>4.8.1</okhttp.version>
       <apach.math.version>6.5.0.Final</apach.math.version>
       <hutool.version>5.4.1</hutool.version>
       <metrics-prometheus.version>1.5.1</metrics-prometheus.version>
       <xxl-job.version>2.3.0</xxl-job.version>
+      <resttemplate.version>0.0.1-SNAPSHOT</resttemplate.version>
+      <mlog.core.version>0.0.3-SNAPSHOT</mlog.core.version>
    </properties>
+
+   <!-- 许可证信息 -->
+   <licenses>
+      <!-- Apache许可证 -->
+      <license>
+         <name>The Apache Software License, Version 2.0</name>
+         <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      </license>
+   </licenses>
+   <!-- SCM信息 -> git在github上托管 -->
+   <scm>
+      <url>https://github.com/JavaFamilyClub/springboot-archetype</url>
+      <connection>scm:git:git://github.com/JavaFamilyClub/springboot-archetype.git</connection>
+      <developerConnection>scm:git:ssh://git@github.com/JavaFamilyClub/springboot-archetype.git</developerConnection>
+   </scm>
+
+   <!-- 开发者信息 -->
+   <developers>
+      <developer>
+         <id>JavaFamilyClub</id>
+         <name>JavaFamily</name>
+         <email>javafamily.club@outlook.com</email>
+         <organization>JavaFamily</organization>
+      </developer>
+   </developers>
 
    <profiles>
       <profile>
-         <id>prod</id>
-         <properties>
-            <project.release.version>1.0</project.release.version>
-         </properties>
+         <id>javafamily-central</id>
+         <activation>
+            <activeByDefault>true</activeByDefault>
+         </activation>
+         <build>
+            <plugins>
+               <plugin>
+                  <groupId>org.sonatype.plugins</groupId>
+                  <artifactId>nexus-staging-maven-plugin</artifactId>
+                  <version>1.6.7</version>
+                  <extensions>true</extensions>
+                  <configuration>
+                     <serverId>javafamily-central</serverId>
+                     <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                  </configuration>
+               </plugin>
+
+               <!-- 要生成Javadoc和Source jar文件，您必须配置javadoc和源Maven插件 -->
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-source-plugin</artifactId>
+                  <version>3.2.1</version>
+                  <executions>
+                     <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                           <goal>jar-no-fork</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-javadoc-plugin</artifactId>
+                  <version>2.9.1</version>
+                  <executions>
+                     <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                           <goal>jar</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+               <!--  必须配置GPG插件用于使用以下配置对组件进行签名 -->
+               <plugin>
+                  <groupId>org.apache.maven.plugins</groupId>
+                  <artifactId>maven-gpg-plugin</artifactId>
+                  <version>3.0.1</version>
+                  <executions>
+                     <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                           <goal>sign</goal>
+                        </goals>
+                     </execution>
+                  </executions>
+               </plugin>
+            </plugins>
+         </build>
+         <!-- 【注】snapshotRepository 与 repository 中的 id 一定要与 setting.xml 中 server 的 id 保持一致！ -->
+         <distributionManagement>
+            <snapshotRepository>
+               <id>javafamily-central</id>
+               <name>Snapshots</name>
+               <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            </snapshotRepository>
+            <repository>
+               <id>javafamily-central</id>
+               <name>Releases</name>
+               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            </repository>
+         </distributionManagement>
       </profile>
    </profiles>
 
    <distributionManagement>
-      <repository>
-         <id>release</id>
-         <name>nexus Repository RELEASES</name>
-         <url>http://javafamily.club:8081/repository/maven-releases/</url>
-      </repository>
       <snapshotRepository>
-         <id>allow-snapshots</id>
-         <name>nexus Repository SNAPSHOTS</name>
-         <url>http://javafamily.club:8081/repository/maven-snapshots/</url>
+         <id>javafamily-central</id>
+         <url>https://oss.sonatype.org/content/repositories/snapshots</url>
       </snapshotRepository>
+      <repository>
+         <id>javafamily-central</id>
+         <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
    </distributionManagement>
 
    <dependencyManagement>
@@ -118,6 +222,61 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>mlog-utils</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>spring-boot-starter-resttemplate</artifactId>
+            <version>${resttemplate.version}</version>
+         </dependency>
+
+         <!-- 引入天擎查询依赖 -->
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>spring-boot-starter-cmadaas</artifactId>
+            <version>${cma.query.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>mlog-tablelens</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>export-core</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>excel-common</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>excel-exporter</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>excel-importer</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>lens-exporter</artifactId>
+            <version>${mlog.core.version}</version>
          </dependency>
 
          <dependency>
@@ -175,6 +334,24 @@
          </dependency>
 
          <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>e-mlog-data-processor-grb2</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>e-mlog-data-processor-cloudimg</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>e-mlog-data-processor-cloudimg-extension-cma</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
+
+         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${metrics-prometheus.version}</version>
@@ -186,6 +363,11 @@
             <version>${xxl-job.version}</version>
          </dependency>
 
+         <dependency>
+            <groupId>com.mlog</groupId>
+            <artifactId>mlog-swagger-starter</artifactId>
+            <version>${mlog.core.version}</version>
+         </dependency>
       </dependencies>
    </dependencyManagement>
 
@@ -205,7 +387,7 @@
                <configuration>
                   <source>${jdk.version}</source>
                   <target>${jdk.version}</target>
-                  <!--                  <encoding>${project.build.sourceEncoding}}</encoding>-->
+<!--                  <encoding>${project.build.sourceEncoding}}</encoding>-->
                </configuration>
             </plugin>
 
@@ -390,4 +572,5 @@
          </plugin>
       </plugins>
    </reporting>
+
 </project>
