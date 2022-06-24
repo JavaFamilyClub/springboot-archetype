@@ -1,8 +1,0 @@
-spring:
-   cloud:
-      nacos:
-         config:
-            server-addr: 68.79.13.97:8848
-            file-extension: yaml
-            namespace: sxyjzx
-            group: sxyjzx
