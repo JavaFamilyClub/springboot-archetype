@@ -14,6 +14,11 @@
    <description>${project.artifactId}</description>
    <url>https://github.com/JavaFamilyClub/springboot-archetype/springboot-jpa-template</url>
 
+   <properties>
+      <DOCKER_ACCOUNT>account</DOCKER_ACCOUNT>
+      <DOCKER_PWD>pwd</DOCKER_PWD>
+   </properties>
+
    <dependencies>
       <dependency>
          <groupId>org.springframework.boot</groupId>
@@ -157,10 +162,6 @@
                      </goals>
                   </execution>
                </executions>
-               <configuration>
-                  <keyname>46A46638E7A4C988603988FC9A698D0385DD4339</keyname>
-                  <passphrase>dreamLi0812!@#</passphrase>
-               </configuration>
             </plugin>
          </plugins>
       </pluginManagement>
@@ -202,12 +203,12 @@
             </executions>
             <configuration>
                <!--镜像仓库地址 -->
-               <repository>161.189.222.190:8080/mlog/${artifactId}</repository>
+               <repository>javafamily/${artifactId}</repository>
                <!--镜像tag -->
                <tag>${project.version}</tag>
                <!--镜像仓库用户名和密码 -->
-               <username>pushuser</username>
-               <password><![CDATA[yiJi123!@#]]></password>
+               <username>${DOCKER_ACCOUNT}</username>
+               <password>${DOCKER_PWD}</password>
 
                <!--自定义构建参数，可传递到Dockerfile文件中 -->
                <buildArgs>
