@@ -5,7 +5,7 @@
 ``` xml
 <groupId>club.javafamily</groupId>
 <artifactId>springboot-jpa-template-archetype</artifactId>
-<version>2.3.2-SNAPSHOT</version>
+<version>1.0</version>
 ```
 
 ## 1. 检查 Coding Style
